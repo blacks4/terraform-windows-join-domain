@@ -1,0 +1,15 @@
+target_host = "replace_with_windows_server_ip_or_hostname"
+winrm_port  = 5985
+
+# Account used to connect to the target host over WinRM.
+winrm_username = "replace_with_local_admin_username"
+winrm_password = "replace_with_local_admin_password"
+
+# Active Directory join settings.
+domain_name = "replace_with_domain_fqdn"
+
+# Set to null to use the default Computers container, or provide an OU path.
+domain_ou_path = "OU=Servers,DC=replace_with_domain_component,DC=local"
+
+domain_join_user     = "DOMAIN\\replace_with_domain_join_user"
+domain_join_password = "replace_with_domain_join_password"
