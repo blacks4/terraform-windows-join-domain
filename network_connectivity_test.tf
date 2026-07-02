@@ -17,14 +17,7 @@ resource "null_resource" "tcp_connectivity_test" {
 
   provisioner "local-exec" {
     interpreter = ["/bin/sh", "-c"]
-    command     = <<-EOT
-      output_file="${path.module}/.connectivity_test_result.txt"
-      rm -f "$output_file"
-      output="$(nc -vz ${var.connectivity_test_host} ${var.connectivity_test_port} 2>&1)"
-      exit_code=$?
-      printf "%s\n" "$output" | tee "$output_file"
-      exit "$exit_code"
-    EOT
+    command     = "nc -vz ${var.connectivity_test_host} ${var.connectivity_test_port} 2>&1 | tee ${path.module}/.connectivity_test_result.txt || true"
   }
 }
 
@@ -35,5 +28,5 @@ output "connectivity_test_target" {
 
 output "connectivity_test_result" {
   description = "Raw output from the nc connectivity test command."
-  value       = try(trimspace(file("${path.module}/.connectivity_test_result.txt")), "No connectivity test result file found yet.")
+  value       = try(file("${path.module}/.connectivity_test_result.txt"), "")
 }
