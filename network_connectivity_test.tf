@@ -17,7 +17,12 @@ resource "null_resource" "tcp_connectivity_test" {
 
   provisioner "local-exec" {
     interpreter = ["/bin/sh", "-c"]
-    command     = "nc -vz ${var.connectivity_test_host} ${var.connectivity_test_port} 2>&1 | tee ${path.module}/.connectivity_test_result.txt || true"
+    command     = <<-EOT
+    hostname
+    #echo "second"
+    "nc -vz ${var.connectivity_test_host} ${var.connectivity_test_port} 2>&1 | tee ${path.module}/.connectivity_test_result.txt || true"
+  EOT
+    #command     = "nc -vz ${var.connectivity_test_host} ${var.connectivity_test_port} 2>&1 | tee ${path.module}/.connectivity_test_result.txt || true"
   }
 }
 
