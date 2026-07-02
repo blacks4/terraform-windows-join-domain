@@ -1,0 +1,12 @@
+provider "ad" {
+  winrm_hostname = var.winrm_hostname
+  winrm_username = var.winrm_username
+  winrm_password = var.winrm_password
+
+  winrm_port  = 5986
+  winrm_proto = "https"
+
+  winrm_insecure         = true
+  winrm_use_ntlm         = true # use NTLM instead of Kerberos
+  winrm_pass_credentials = true
+}

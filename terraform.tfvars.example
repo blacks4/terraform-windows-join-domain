@@ -13,3 +13,18 @@ domain_ou_path = "OU=Servers,DC=replace_with_domain_component,DC=local"
 
 domain_join_user     = "DOMAIN\\replace_with_domain_join_user"
 domain_join_password = "replace_with_domain_join_password"
+
+# Optional: single TCP connectivity test target.
+# If left null, the test defaults to target_host + winrm_port.
+connectivity_test_host            = null
+connectivity_test_port            = null
+connectivity_test_timeout_seconds = 5
+
+# Optional: test multiple endpoints from the HCP Terraform agent.
+# If this list is non-empty, it is used instead of connectivity_test_host/port.
+# Example:
+# connectivity_test_targets = [
+#   { name = "winrm_primary", host = "10.0.1.10", port = 5985 },
+#   { name = "vault_https",   host = "10.0.2.20", port = 8200 }
+# ]
+connectivity_test_targets = []
