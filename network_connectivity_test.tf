@@ -16,13 +16,14 @@ resource "null_resource" "tcp_connectivity_test" {
   }
 
   provisioner "local-exec" {
-    interpreter = ["/bin/bash", "-c"]
+    interpreter = ["/bin/sh", "-c"]
     command     = <<-EOT
-      set -o pipefail
       output_file="${path.module}/.connectivity_test_result.txt"
       rm -f "$output_file"
-      nc -vz ${var.connectivity_test_host} ${var.connectivity_test_port} 2>&1 | tee "$output_file"
-      exit $${PIPESTATUS[0]}
+      output="$(nc -vz ${var.connectivity_test_host} ${var.connectivity_test_port} 2>&1)"
+      exit_code=$?
+      printf "%s\n" "$output" | tee "$output_file"
+      exit "$exit_code"
     EOT
   }
 }
